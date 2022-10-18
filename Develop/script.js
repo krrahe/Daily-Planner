@@ -1,92 +1,77 @@
-var timeDisplayEl = $('#time-display');
-var projectModalEl = $('#project-modal');
+//get the info stored if any
+$("#hour8 .task-info").val(localStorage.getItem("hour8"));
+$("#hour9 .task-info").val(localStorage.getItem("hour9"));
+$("#hour10 .task-info").val(localStorage.getItem("hour10"));
+$("#hour11 .task-info").val(localStorage.getItem("hour11"));
+$("#hour12 .task-info").val(localStorage.getItem("hour12"));
+$("#hour13 .task-info").val(localStorage.getItem("hour13"));
+$("#hour14 .task-info").val(localStorage.getItem("hour14"));
+$("#hour15 .task-info").val(localStorage.getItem("hour15"));
+$("#hour16 .task-info").val(localStorage.getItem("hour16"));
+$("#hour17 .task-info").val(localStorage.getItem("hour17"));
 
+// makes a little clock that shows current time, updates every second
+var timeDisplayEl = $("#time-display");
 function displayTime() {
-    var rightNow = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
-    timeDisplayEl.text(rightNow);
+  var rightNow = moment().format("MMM DD, YYYY [at] hh:mm:ss a");
+  timeDisplayEl.text(rightNow);
 }
 setInterval(displayTime, 1000);
 
+//Used two instances of rightNow bc it kept outsmarting me
+var rightNow = moment().format("MMM DD, YYYY [at] hh:mm:ss a");
+$(document).ready(function () {
+  // saveBtn click listener
+  $(".saveBtn").on("click", function () {
+    // Get values from the html/jquery
+    var text = $(this).siblings(".task-info").val();
+    var time = $(this).parent().attr("id");
 
-var timeDisplayEl = $('#time-display');
-var projectDisplayEl = $('#project-display');
-var projectModalEl = $('#project-modal');
-var projectFormEl = $('#project-form');
-var projectNameInputEl = $('#project-name-input');
-var projectTypeInputEl = $('#project-type-input');
-var hourlyRateInputEl = $('#hourly-rate-input');
-var dueDateInputEl = $('#due-date-input');
+    // Save text in local storage
+    localStorage.setItem(time, text);
+  });
 
+  function checkTime() {
+    //get current number of hours.
+    var currentTime = moment().hour();
 
+    // loop over time blocks
+    $(".time-block").each(function () {
+      var blockTime = parseInt($(this).attr("id").split("hour")[1]);
+      // var blockTime = [
+      //   $("hour8"),
+      //   $("hour9"),
+      //   $("hour10"),
+      //   $("hour11"),
+      //   $("hour12"),
+      //   $("hour13"),
+      //   $("hour14"),
+      //   $("hour15"),
+      //   $("hour16"),
+      //   $("hour17")
+      // ];
+      // blockTime.split('hour')
+      // To check time block against current time for color
+      if (blockTime === currentTime) {
+        $(this).removeClass("past");
+        $(this).removeClass("future");
+        $(this).addClass("present");
+      } else if (blockTime < currentTime) {
+        $(this).removeClass("future");
+        $(this).removeClass("present");
+        $(this).addClass("past");
+      } else if (blockTime>currentTime) {
+        $(this).removeClass("present");
+        $(this).removeClass("past");
+        $(this).addClass("future");
+      }
+    });
+  }
 
+  checkTime();
+});
 
-function printProjectData(name, type, hourlyRate, dueDate) {
-    var projectRowEl = $('<tr>');
-
-    var projectNameTdEl = $('<td>').addClass('p-2').text(name);
-
-    var projectTypeTdEl = $('<td>').addClass('p-2').text(type);
-
-    var rateTdEl = $('<td>').addClass('p-2').text(hourlyRate);
-
-    var dueDateTdEl = $('<td>').addClass('p-2').text(dueDate);
-
-    var daysToDate = moment(dueDate, 'MM/DD/YYYY').diff(moment(), 'days');
-    var daysLeftTdEl = $('<td>').addClass('p-2').text(daysToDate);
-
-    var totalEarnings = calculateTotalEarnings(hourlyRate, daysToDate);
-
-    // You can also chain methods onto new lines to keep code clean
-    var totalTdEl = $('<td>')
-        .addClass('p-2')
-        .text('$' + totalEarnings);
-
-    var deleteProjectBtn = $('<td>')
-        .addClass('p-2 delete-project-btn text-center')
-        .text('X');
-
-    // By listing each `<td>` variable as an argument, each one will be appended in that order
-    projectRowEl.append(
-        projectNameTdEl,
-        projectTypeTdEl,
-        rateTdEl,
-        dueDateTdEl,
-        daysLeftTdEl,
-        totalTdEl,
-        deleteProjectBtn
-    );
-
-    projectDisplayEl.append(projectRowEl);
-
-    projectModalEl.modal('hide');
-}
-
-function calculateTotalEarnings(rate, days) {
-    var dailyTotal = rate * 8;
-    var total = dailyTotal * days;
-    return total;
-}
-
-function handleDeleteProject(event) {
-    console.log(event.target);
-    var btnClicked = $(event.target);
-    btnClicked.parent('tr').remove();
-}
-
-// handle project form submission
-function handleProjectFormSubmit(event) {
-    event.preventDefault();
-
-    var projectName = projectNameInputEl.val().trim();
-    var projectType = projectTypeInputEl.val().trim();
-    var hourlyRate = hourlyRateInputEl.val().trim();
-    var dueDate = dueDateInputEl.val().trim();
-
-    printProjectData(projectName, projectType, hourlyRate, dueDate);
-
-    projectFormEl[0].reset();
-}
-
-projectFormEl.on('submit', handleProjectFormSubmit);
-projectDisplayEl.on('click', '.delete-project-btn', handleDeleteProject);
-dueDateInputEl.datepicker({ minDate: 1 });
+//Liked this as an idea but having trouble making it do the thing 
+$(".clearBtn").on("click", function () {
+  localStorage.clear();
+});

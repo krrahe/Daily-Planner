@@ -18,6 +18,12 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="style.css" />
     <title>Work Day Scheduler</title>
   </head>
@@ -26,113 +32,101 @@
     <header class="jumbotron">
       <h1 class="display-3">Work Day Scheduler</h1>
       <p class="lead">A simple calendar app for scheduling your work day</p>
-      <p id="currentDay" class="lead"></p>
-      <h4>Current Time &amp; Date: <br /> <span id="time-display">00:00:00</span></h4>
+
+      <h4>
+        Current Time &amp; Date: <br />
+        <span id="time-display">00:00:00</span>
+      </h4>
+      <button type="button" class="btn btn-warning" id="clearBtn">Clear All</button>
     </header>
 
+    <div class="container">
+      <!-- Timeblocks start here -->
+<!-- doesnt save for 8 and only 8? -->
+      <div id="hour8 " class="time-block row">
+        <div class="col-md-1 hour ">8 AM</div>
+        <textarea class="col-md-10 task-info "> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
 
-    <main class="container-fluid">
-      <div class="row">
-        <section class="col-12 col-md-4 col-lg-3">
-          <div class="card custom-card">
-            <h3 class="card-header">
-              Instructions
-            </h3>
-            <div class="card-body">
-              <div class="card-text">
-                Click the button below to open a form and provide information for the following:
-              </div>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Project Name</li>
-              <li class="list-group-item">Project Type</li>
-              <li class="list-group-item">Due Date</li>
-              <li class="list-group-item">Hourly Rate</li>
-            </ul>
-            <div class="card-footer">
-              <button class="btn btn-block custom-btn" data-toggle="modal" data-target="#project-modal">Add
-                Project</button>
-            </div>
-          </div>
-        </section>
-  
-        <section class="col-12 col-md-8 col-lg-9">
-          <div class="table-responsive">
-            <table class="table table-bordered custom-table">
-              <thead>
-                <tr>
-                  <th scope="col">Project Name</th>
-                  <th scope="col">Project Type</th>
-                  <th scope="col">Hourly Rate ($)</th>
-                  <th scope="col">Due Date</th>
-                  <th scope="col">Days Until Due Date</th>
-                  <th scope="col">Potential Total Earnings ($)</th>
-                  <th scope="col" class="p-3"></th>
-                </tr>
-              </thead>
-              <tbody id="project-display"></tbody>
-            </table>
-          </div>
-        </section>
+      <div id="hour9" class="time-block row ">
+        <div class="col-md-1 hour">9 AM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
       </div>
-    </main>
-  
-    <!-- Modal -->
-    <div class="modal fade custom-modal" id="project-modal" tabindex="-1" role="dialog"
-      aria-labelledby="project-modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="project-modal-form">Add a new project.</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form id="project-form">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="project-name-input">Project Name</label>
-                <input type="text" id="project-name-input" class="form-control" placeholder="Enter the project's name"
-                  required />
-              </div>
-  
-              <div class="form-group">
-                <label for="project-type-input">Project Type</label>
-                <select class="form-control" id="project-type-input">
-                  <option selected disabled>Pick one...</option>
-                  <option value="Web Application (Front End)">Web Application (Front End)</option>
-                  <option value="Web Application (Back End)">Web Application (Back End)</option>
-                  <option value="Web Application (Full Stack)">Web Application (Full Stack)</option>
-                  <option value="Mobile Application">Mobile Application</option>
-                  <option value="Print Campaign">Print Campaign</option>
-                  <option value="Digital Marketing Campaign">Digital Marketing Campaign</option>
-                </select>
-              </div>
-  
-              <div class="form-group">
-                <label for="hourly-rate-input">Hourly Rate ($)</label>
-                <input type="number" id="hourly-rate-input" class="form-control" placeholder="$" min="0" required />
-              </div>
-  
-              <div class="form-group">
-                <label for="due-date-input">Due Date</label>
-                <input type="text" min='1' id="due-date-input" class="form-control" placeholder="When is the project due?"
-                  required />
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn custom-btn">Submit Project Info</button>
-            </div>
-          </form>
-        </div>
+
+      <div id="hour10" class="time-block row ">
+        <div class="col-md-1 hour">10 AM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
       </div>
-    </div>
-      <!-- Timeblocks go here -->
+
+      <div id="hour11" class="time-block row ">
+        <div class="col-md-1 hour">11 AM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+
+      <div id="hour12" class="time-block row ">
+        <div class="col-md-1 hour"> 12 pm</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+
+      <div id="hour13" class="time-block row">
+        <div class="col-md-1 hour">1 PM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+
+      <div id="hour14" class="time-block row">
+        <div class="col-md-1 hour">2 PM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+
+      <div id="hour15" class="time-block row">
+        <div class="col-md-1 hour">3 PM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+
+      <div id="hour16" class="time-block row">
+        <div class="col-md-1 hour">4 PM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+      
+      <div id="hour17" class="time-block row">
+        <div class="col-md-1 hour">5 PM</div>
+        <textarea class="col-md-10 task-info"> </textarea>
+        <button class="btn saveBtn col-md-1">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+    
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src =script.js></script>
+    <script src="script.js"></script>
   </body>
 </html>

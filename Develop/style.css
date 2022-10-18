@@ -1,5 +1,7 @@
+
+
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   line-height: 1;
 }
@@ -57,18 +59,6 @@ textarea {
   color: white;
 }
 
-.saveBtn {
-  border-left: 1px solid black;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-  background-color: #06aed5;
-  color: white;
-}
-
-.saveBtn i:hover {
-  font-size: 20px;
-  transition: all 0.3s ease-in-out;
-}
 :root {
   --blue: #2980b9;
   --lightblue: #3498db;
@@ -78,7 +68,7 @@ textarea {
 }
 
 body {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: "Fira Sans", sans-serif;
   font-weight: 400;
   background-color: var(--light);
   color: var(--darkblue);
@@ -136,3 +126,4 @@ thead {
 .delete-project-btn {
   cursor: pointer;
 }
+
