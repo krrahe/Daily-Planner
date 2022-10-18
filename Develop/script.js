@@ -73,5 +73,5 @@ $(document).ready(function () {
 
 //Liked this as an idea but having trouble making it do the thing 
 $(".clearBtn").on("click", function () {
-  localStorage.clear();
+  localStorage.clear(time, text);
 });
